@@ -1,4 +1,73 @@
+body {
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
 
+/* CABEÇALHO ESTILO CNN / GLOBO NEWS */
+.header {
+  background: #d00;
+  padding: 15px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.live-dot {
+  height: 12px;
+  width: 12px;
+  background: #ff4b4b;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
+/* BARRA DE RELÓGIOS */
+.clock-bar {
+  display: flex;
+  justify-content: space-around;
+  background: #111;
+  padding: 10px;
+  border-bottom: 2px solid #222;
+}
+
+.clock-box {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* ÁREA DE NOTÍCIAS */
+#news-area {
+  padding: 25px;
+  text-align: left;
+  font-size: 26px;
+  line-height: 1.4;
+}
+
+/* RODAPÉ BÍBLICO */
+.bible-footer {
+  background: #111;
+  padding: 15px;
+  text-align: center;
+  font-size: 20px;
+  color: #ffd;
+  position: sticky;
+  bottom: 0;
+  border-top: 2px solid #222;
+}
 }body {
   background: #000;
   color: #fff;
