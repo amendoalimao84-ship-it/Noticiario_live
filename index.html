@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,148 +12,154 @@
         background: #000;
         color: #fff;
         overflow: hidden;
-    }/* Pulsação */
-#pulse {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(255,0,0,0.25), transparent 70%);
-    border-radius: 50%;
-    animation: pulse 4s infinite;
-    z-index: -2;
-}
-@keyframes pulse {
-    0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-    50% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.3; }
-    100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-}
+    }
 
-/* Partículas */
-.particle {
-    position: fixed;
-    top: -10px;
-    width: 4px;
-    height: 4px;
-    background: white;
-    border-radius: 50%;
-    opacity: 0.8;
-    animation: fall linear infinite;
-}
-@keyframes fall {
-    from { transform: translateY(-10px); }
-    to { transform: translateY(110vh); }
-}
+    /* Pulsação */
+    #pulse {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(255,0,0,0.25), transparent 70%);
+        border-radius: 50%;
+        animation: pulse 4s infinite;
+        z-index: -2;
+    }
+    @keyframes pulse {
+        0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+        50% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.3; }
+        100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+    }
 
-/* Tarja */
-#newsbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: red;
-    color: yellow;
-    padding: 5px;
-    font-weight: bold;
-    overflow: hidden;
-}
-#newsbar::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: rgba(255,255,255,0.3);
-    animation: shine 6s infinite;
-}
-@keyframes shine {
-    0% { left: -100%; }
-    50% { left: 100%; }
-    100% { left: 100%; }
-}
+    /* Partículas */
+    .particle {
+        position: fixed;
+        top: -10px;
+        width: 4px;
+        height: 4px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.8;
+        animation: fall linear infinite;
+    }
+    @keyframes fall {
+        from { transform: translateY(-10px); }
+        to { transform: translateY(110vh); }
+    }
 
-/* Área principal */
-#content {
-    margin-top: 60px;
-    text-align: center;
-    padding: 20px;
-}
+    /* Tarja */
+    #newsbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: red;
+        color: yellow;
+        padding: 5px;
+        font-weight: bold;
+        overflow: hidden;
+    }
+    #newsbar::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: rgba(255,255,255,0.3);
+        animation: shine 6s infinite;
+    }
+    @keyframes shine {
+        0% { left: -100%; }
+        50% { left: 100%; }
+        100% { left: 100%; }
+    }
 
-/* Typewriter */
-#typewriter {
-    font-size: 1.2rem;
-    height: 30px;
-    white-space: nowrap;
-    overflow: hidden;
-    border-right: 2px solid #fff;
-    width: 100%;
-    margin-bottom: 10px;
-    animation: cursorBlink 0.7s infinite;
-}
-@keyframes cursorBlink {
-    0% { border-color: transparent; }
-    50% { border-color: white; }
-    100% { border-color: transparent; }
-}
+    /* Área principal */
+    #content {
+        margin-top: 60px;
+        text-align: center;
+        padding: 20px;
+    }
 
-/* Relógios */
-.clock { font-size: 1rem; margin: 5px; }
+    /* Typewriter */
+    #typewriter {
+        font-size: 1.2rem;
+        height: 30px;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 2px solid #fff;
+        width: 100%;
+        margin-bottom: 10px;
+        animation: cursorBlink 0.7s infinite;
+    }
+    @keyframes cursorBlink {
+        0% { border-color: transparent; }
+        50% { border-color: white; }
+        100% { border-color: transparent; }
+    }
 
-/* Contagem */
-#countdown { font-size: 1.4rem; font-weight: bold; margin-top: 10px; }
+    /* Relógios */
+    .clock { font-size: 1rem; margin: 5px; }
 
-/* Pergunta */
-#question { margin-top: 15px; font-size: 1.1rem; color: #ffeb3b; }
+    /* Contagem */
+    #countdown { font-size: 1.4rem; font-weight: bold; margin-top: 10px; }
 
-/* Gráfico animado */
-#graph {
-    width: 100%;
-    height: 70px;
-    background: none;
-    border-bottom: 2px solid white;
-    position: relative;
-    margin-top: 20px;
-}
-#graph-line {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 200%;
-    height: 100%;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="70"><polyline points="0,40 40,20 80,50 120,10 160,45 200,15 240,50 280,20 320,40 360,10 400,40" fill="none" stroke="white" stroke-width="3"/></svg>');
-    background-size: cover;
-    animation: moveGraph 8s linear infinite;
-}
-@keyframes moveGraph {
-    from { left: 0; }
-    to { left: -100%; }
-}
+    /* Pergunta */
+    #question { margin-top: 15px; font-size: 1.1rem; color: #ffeb3b; }
 
-/* Barras de fé */
-#faith {
-    height: 120px;
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-.bar {
-    width: 20px;
-    background: yellow;
-    animation: faithAnim 3s infinite ease-in-out;
-}
-@keyframes faithAnim {
-    0% { height: 20px; }
-    50% { height: 100px; }
-    100% { height: 20px; }
-}
+    /* Gráfico animado */
+    #graph {
+        width: 100%;
+        height: 70px;
+        background: none;
+        border-bottom: 2px solid white;
+        position: relative;
+        margin-top: 20px;
+    }
+    #graph-line {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 200%;
+        height: 100%;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="70"><polyline points="0,40 40,20 80,50 120,10 160,45 200,15 240,50 280,20 320,40 360,10 400,40" fill="none" stroke="white" stroke-width="3"/></svg>');
+        background-size: cover;
+        animation: moveGraph 8s linear infinite;
+    }
+    @keyframes moveGraph {
+        from { left: 0; }
+        to { left: -100%; }
+    }
 
+    /* Barras de fé */
+    #faith {
+        height: 120px;
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+    .bar {
+        width: 20px;
+        background: yellow;
+        animation: faithAnim 3s infinite ease-in-out;
+    }
+    @keyframes faithAnim {
+        0% { height: 20px; }
+        50% { height: 100px; }
+        100% { height: 20px; }
+    }
 </style>
 </head>
-<body><div id="pulse"></div>
-<div id="newsbar"> ÚLTIMOS ACONTECIMENTOS PROFÉTICOS — PREPARE-SE — PERMANEÇA VIGIANDO </div><!-- Partículas --><script>
+<body>
+
+<div id="pulse"></div>
+<div id="newsbar"> ÚLTIMOS ACONTECIMENTOS PROFÉTICOS — PREPARE-SE — PERMANEÇA VIGIANDO </div>
+
+<!-- Partículas -->
+<script>
     for (let i = 0; i < 40; i++) {
         const p = document.createElement("div");
         p.classList.add("particle");
@@ -160,33 +167,38 @@
         p.style.animationDuration = 3 + Math.random() * 5 + "s";
         document.body.appendChild(p);
     }
-</script><div id="content"><div id="typewriter"></div>
+</script>
 
-<div class="clock" id="clock-israel"></div>
-<div class="clock" id="clock-br"></div>
+<div id="content">
 
-<div id="countdown"></div>
+    <div id="typewriter"></div>
 
-<h3>Eventos Proféticos Importantes</h3>
-<ul style="text-align:left; max-width:300px; margin:auto;">
-    <li>Acordos de paz no Oriente Médio</li>
-    <li>Crescimento das tensões globais</li>
-    <li>Aumento de perseguições e crises</li>
-    <li>Sinais naturais e políticos</li>
-</ul>
+    <div class="clock" id="clock-israel"></div>
+    <div class="clock" id="clock-br"></div>
 
-<div id="question"></div>
+    <div id="countdown"></div>
 
-<div id="graph"><div id="graph-line"></div></div>
+    <h3>Eventos Proféticos Importantes</h3>
+    <ul style="text-align:left; max-width:300px; margin:auto;">
+        <li>Acordos de paz no Oriente Médio</li>
+        <li>Crescimento das tensões globais</li>
+        <li>Aumento de perseguições e crises</li>
+        <li>Sinais naturais e políticos</li>
+    </ul>
 
-<div id="faith">
-    <div class="bar"></div>
-    <div class="bar"></div>
-    <div class="bar"></div>
-    <div class="bar"></div>
+    <div id="question"></div>
+
+    <div id="graph"><div id="graph-line"></div></div>
+
+    <div id="faith">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
 </div>
 
-</div><script>
+<script>
 // Typewriter
 const msgs = [
     "Vigiem, pois não sabem o dia nem a hora...",
@@ -215,8 +227,11 @@ type();
 
 // Relógios
 function updateClocks() {
-    document.getElementById("clock-israel").textContent = "Israel: " + new Date().toLocaleString("pt-BR", {timeZone:"Asia/Jerusalem"});
-    document.getElementById("clock-br").textContent = "Brasil: " + new Date().toLocaleString("pt-BR", {timeZone:"America/Sao_Paulo"});
+    document.getElementById("clock-israel").textContent =
+        "Israel: " + new Date().toLocaleString("pt-BR", {timeZone:"Asia/Jerusalem"});
+
+    document.getElementById("clock-br").textContent =
+        "Brasil: " + new Date().toLocaleString("pt-BR", {timeZone:"America/Sao_Paulo"});
 }
 setInterval(updateClocks, 1000);
 updateClocks();
@@ -226,10 +241,37 @@ function updateCountdown() {
     const target = new Date("2030-01-01T00:00:00Z");
     const now = new Date();
     const diff = target - now;
+
     if (diff <= 0) {
         document.getElementById("countdown").textContent = "Chegou o momento profético.";
         return;
     }
+
     const d = Math.floor(diff / (1000*60*60*24));
     const h = Math.floor((diff / (1000*60*60)) % 24);
-    const m = Math.floor((diff / (1000*
+    const m = Math.floor((diff / (1000*60)) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("countdown").textContent =
+        `${d} dias — ${h}h ${m}m ${s}s`;
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+// Perguntas aleatórias
+const questions = [
+    "Você acredita que estamos perto de um marco profético?",
+    "Já ouviu falar do arrebatamento?",
+    "Você vê sinais acontecendo no mundo?",
+    "A profecia tem se cumprido diante dos seus olhos?"
+];
+function changeQuestion() {
+    document.getElementById("question").textContent =
+        questions[Math.floor(Math.random() * questions.length)];
+}
+setInterval(changeQuestion, 60000);
+changeQuestion();
+</script>
+
+</body>
+</html>
