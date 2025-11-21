@@ -1,104 +1,81 @@
-<!DOCTYPE html><html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Noticiário Profético 2030</title>
-  <style>
-    body{
-      margin:0;
-      background:#000;
-      color:#fff;
-      font-family:Arial, sans-serif;
-      overflow:hidden;
-    }
-    .container{
-      width:100vw;
-      height:100vh;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      padding:15px;
-      box-sizing:border-box;
-    }
-    h1{
-      text-align:center;
-      margin:0;
-      font-size:1.8rem;
-      color:#ffdd55;
-    }
-    .panel{
-      flex:1;
-      display:flex;
-      flex-direction:column;
-      justify-content:flex-start;
-      align-items:center;
-      margin-top:10px;
-      text-align:center;
-    }
-    .prophecy-box{
-      width:95%;
-      background:#111;
-      padding:15px;
-      border-radius:10px;
-      border:2px solid #444;
-      margin-bottom:15px;
-    }
-    .prophecy-box h2{
-      margin-top:0;
-      color:#ffcc66;
-    }
-    .countdown{
-      font-size:1.4rem;
-      margin:10px 0;
-      color:#00eaff;
-    }
-    #chart{
-      width:90%;
-      height:110px;
-      background:#111;
-      border-radius:8px;
-      margin:10px auto;
-      border:1px solid #333;
-    }
-    /* ticker */
-    .ticker{
-      width:100%;
-      background:#222;
-      overflow:hidden;
-      white-space:nowrap;
-      border-top:2px solid #555;
-      padding:8px 0;
-      font-size:1rem;
-    }
-    .ticker span{
-      display:inline-block;
-      padding-left:100%;
-      animation:scroll 18s linear infinite;
-    }
-    @keyframes scroll{
-      0%{ transform:translateX(0); }
-      100%{ transform:translateX(-100%); }
-    }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Noticiário Profético 24h — Preview</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Chart.js CDN (para gráfico leve) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h1>🔔 Noticiário Profético 2030</h1><div class="panel">
-  <div class="prophecy-box">
-    <h2>📜 3 Profecias Bíblicas em Destaque</h2>
-    <ul style="text-align:left; font-size:1.1rem;">
-      <li>⚠ "Rumores de guerras e nações contra nações"</li>
-      <li>🌑 "Sinais no céu, na lua e nas estrelas"</li>
-      <li>🌍 "O aumento do conhecimento e aceleração global"</li>
-    </ul>
+
+  <header class="topbar">
+    <div class="left">
+      <span class="live-dot"></span>
+      AO VIVO — NOTICIÁRIO 24H
+    </div>
+    <div class="right clocks">
+      <div class="clock">🇮🇱 Israel: <span id="clock-israel">--:--:--</span></div>
+      <div class="clock">🇺🇸 EUA (NY): <span id="clock-usa">--:--:--</span></div>
+      <div class="clock small">Contagem até 2030: <span id="countdown">carregando...</span></div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="left-panel">
+      <div class="card" id="headlineCard">
+        <h2>Notícia em destaque</h2>
+        <div id="featured">Carregando destaque...</div>
+      </div>
+
+      <div class="card" id="globalNews">
+        <h3>Notícias Globais</h3>
+        <ul id="newsList">
+          <li>Carregando notícias...</li>
+        </ul>
+      </div>
+
+      <div class="card prophetic">
+        <h3>Tópicos Proféticos</h3>
+        <ol id="propheticList">
+          <li>1 — Sinais nos céus e mudanças geopolíticas</li>
+          <li>2 — Movimento de nações e colheitas espirituais</li>
+          <li>3 — Aumento de revelação e perseguição</li>
+        </ol>
+      </div>
+    </section>
+
+    <aside class="right-panel">
+      <div class="card chart-card">
+        <h3>Simulação: Cripto / Dólar (pequena)</h3>
+        <canvas id="miniChart" width="300" height="180"></canvas>
+        <div class="chart-controls">
+          <button id="toggleAsset">Ativo: BTC</button>
+          <small id="chartInfo">Última atualização: <span id="chartTime">-</span></small>
+        </div>
+      </div>
+
+      <div class="card trends-card">
+        <h3>Top 5 tendências do Google</h3>
+        <ol id="trendsList">
+          <li>Carregando tendências...</li>
+        </ol>
+      </div>
+    </aside>
+  </main>
+
+  <!-- TICKER rodando embaixo -->
+  <div class="ticker-wrap" aria-hidden="true">
+    <div class="ticker" id="ticker">
+      <span>Carregando feed do ticker...</span>
+    </div>
   </div>
 
-  <div class="countdown" id="countdown">Carregando contagem...</div>
+  <footer class="footer">
+    <div id="bibleMessage">“O Senhor dá força ao seu povo; o Senhor abençoa com paz ao seu povo.” — Salmo 29:11</div>
+  </footer>
 
-  <canvas id="chart"></canvas>
-
-</div>
-
-<div class="ticker"><span id="tickerText">Carregando notícias proféticas...</span></div>
-
-</
+  <script src="script.js"></script>
+</body>
+</html>
