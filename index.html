@@ -4,190 +4,117 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SINAIS & ACORDOS — Trailer Profético (16:9)</title>
-  <!-- Fontes cinematográficas -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,600&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <title>SINAIS & ACORDOS — Trailer Profético (9:16)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
       --bg:#060609; --accent:#e6c07a; --muted:#b9b9c6; --glass: rgba(255,255,255,0.06);
-      --max-width:720px; --height-9-16:calc(var(--max-width) * 16 / 9);
+      --max-width:420px; --height-9-16:calc(var(--max-width) * 16 / 9);
     }
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:linear-gradient(180deg,#03030a 0%, #0b0b10 60%);color:#fff;font-family:Inter,system-ui,Arial;margin:0}/* Container central que simula quadro 16:9 — ideal para export */
-.stage-wrap{display:flex;align-items:center;justify-content:center;padding:40px}
+    html,body{height:100%;margin:0;background:#000;font-family:Inter;color:#fff}.stage-wrap{display:flex;align-items:center;justify-content:center;padding:20px}
 .stage{
-  width:100%;max-width:1280px;height:calc(720px * 16 / 9);background:radial-gradient(ellipse at top,#111217 0%, rgba(10,10,13,0.6) 40%), linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6));
-  border-radius:14px;overflow:hidden;position:relative;box-shadow:0 30px 80px rgba(0,0,0,0.7), 0 6px 18px rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.04)
+  width:100%;max-width:420px;height:calc(420px * 16 / 9);
+  background:#000;position:relative;overflow:hidden;border-radius:20px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.8);
 }
 
-/* Background media placeholder */
-.bg-media{position:absolute;inset:0;object-fit:cover;filter:contrast(1.05) saturate(0.95) brightness(0.75)}
-.overlay{
-  position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg, rgba(0,0,0,0) 10%, rgba(0,0,0,0.45) 60%)
+.bg-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:contrast(1.1) brightness(0.8)}
+.overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.3),rgba(0,0,0,0.7))}
+
+.live-badge{
+  position:absolute;top:4%;left:5%;background:linear-gradient(90deg,#ff4b4b,#ff9147);
+  padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700;z-index:20
 }
 
-/* Cinematic bars */
-.letterbox-top, .letterbox-bottom{position:absolute;left:0;right:0;height:4%;background:linear-gradient(180deg, rgba(0,0,0,0.9), rgba(0,0,0,0.6));z-index:30}
-.letterbox-top{top:0} .letterbox-bottom{bottom:0}
+.title{position:absolute;top:12%;left:0;right:0;text-align:center;z-index:20}
+.title .brand{font-family:'Playfair Display',serif;font-size:32px;color:var(--accent);letter-spacing:1px}
+.title .subtitle{font-size:12px;color:var(--muted);margin-top:4px;text-transform:uppercase}
 
-/* Center title */
-.title{
-  position:absolute;top:10%;left:6%;right:6%;z-index:40;text-align:left;font-family:'Playfair Display',serif
-}
-.title .brand{font-size:48px;letter-spacing:2px;color:var(--accent);margin-bottom:8px}
-.title .subtitle{font-size:18px;color:var(--muted);text-transform:uppercase}
+.clocks{position:absolute;top:4%;right:4%;display:flex;flex-direction:column;gap:6px;z-index:20}
+.clock{padding:4px 8px;background:rgba(0,0,0,0.4);border-radius:6px;font-size:10px;text-align:center}
+.clock .time{font-weight:700;font-size:11px}
 
-/* Clocks */
-.clocks{position:absolute;top:10%;right:6%;display:flex;gap:12px;z-index:45}
-.clock{background:rgba(255,255,255,0.03);backdrop-filter:blur(6px);padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.03)}
-.clock .city{font-size:12px;color:var(--muted);font-weight:600}
-.clock .time{font-size:14px;font-weight:700}
+.scene{position:absolute;bottom:18%;left:5%;right:5%;text-align:center;z-index:30}
+.scene .line{font-size:22px;font-weight:700;text-shadow:0 6px 20px #000}
+.scene .sub{font-size:12px;color:var(--muted);margin-top:6px}
 
-/* Scene caption blocks */
-.scene{position:absolute;left:6%;bottom:14%;width:88%;z-index:42;display:flex;flex-direction:column;gap:8px}
-.scene .line{font-size:32px;font-weight:700;letter-spacing:0.6px;max-width:80%;text-shadow:0 8px 30px rgba(0,0,0,0.7)}
-.scene .sub{font-size:14px;color:var(--muted);font-weight:600}
+.logo-center{position:absolute;bottom:8%;left:0;right:0;text-align:center;z-index:30}
+.logo{font-family:'Playfair Display',serif;font-size:26px;color:var(--accent);opacity:0}
 
-/* Small tags and live badge */
-.live-badge{position:absolute;top:6%;left:6%;z-index:50;background:linear-gradient(90deg,#ff5e5e,#ff9a5e);padding:8px 12px;border-radius:22px;font-weight:700;letter-spacing:0.6px}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadePop{from{opacity:0;transform:scale(0.85)}to{opacity:1;transform:scale(1)}}
 
-/* Hashtag */
-.hashtag{position:absolute;right:6%;bottom:6%;z-index:50;font-weight:700;padding:8px 14px;border-radius:8px;background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.03)}
-
-/* Logo area */
-.logo-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:35;pointer-events:none}
-.logo{font-family:'Playfair Display',serif;font-size:64px;color:rgba(230,192,122,0.95);text-shadow:0 20px 60px rgba(0,0,0,0.6);opacity:0;transform:translateY(12px);}
-
-/* Animation helpers */
-.fade-in{animation:fadeInUp 0.9s ease forwards}
-.fade-in-slow{animation:fadeInUp 1.6s cubic-bezier(.2,.9,.2,1) forwards}
-.cut{animation:cutFlash 0.35s ease}
-
-@keyframes fadeInUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-@keyframes cutFlash{0%{opacity:0}50%{opacity:1}100%{opacity:0}}
-
-/* Responsive shrink */
-@media (max-width:800px){
-  .title .brand{font-size:34px}
-  .scene .line{font-size:22px}
-  .logo{font-size:44px}
-}
-
-/* Controls (not visible when exporting) */
-.controls{position:fixed;left:20px;bottom:20px;z-index:9999;display:flex;gap:8px}
-.controls button{padding:10px 12px;border-radius:8px;border:0;background:var(--glass);color:#fff;backdrop-filter:blur(6px);cursor:pointer}
-
-/* Accessibility: large captions for TikTok readability */
-.caption-large{font-size:28px;font-weight:700}
+.fade-in{animation:fadeInUp .9s ease forwards}
+.fade-pop{animation:fadePop .8s ease forwards}
 
   </style>
 </head>
 <body>
   <div class="stage-wrap">
-    <div class="stage" id="stage"><!-- Background: replace `poster.jpg` and `video.mp4` with your assets -->
-  <img src="" alt="" class="bg-media" id="bgImage" style="display:none">
-  <video id="bgVideo" class="bg-media" autoplay muted loop playsinline style="display:block">
-    <!-- placeholder: users should drop a cinematic clip here -->
-    <source src="assets/placeholder-loop.mp4" type="video/mp4">
+    <div class="stage" id="stage"><video id="bgVideo" class="bg-media" autoplay muted loop playsinline>
+    <source src="assets/vertical-loop.mp4" type="video/mp4">
   </video>
-
   <div class="overlay"></div>
-  <div class="letterbox-top"></div>
-  <div class="letterbox-bottom"></div>
 
   <div class="live-badge">AO VIVO</div>
+
   <div class="title">
     <div class="brand">SINAIS & ACORDOS</div>
     <div class="subtitle">Monitor Profético • Contagem até 2030</div>
   </div>
 
-  <div class="clocks" aria-hidden="true">
+  <div class="clocks">
     <div class="clock"><div class="city">Jerusalém</div><div class="time" id="clock1">--:--:--</div></div>
     <div class="clock"><div class="city">São Paulo</div><div class="time" id="clock2">--:--:--</div></div>
   </div>
 
-  <div class="logo-center"><div class="logo" id="logoText">#Contagem2030</div></div>
-
-  <div class="scene" id="sceneText" aria-live="polite">
-    <div class="line caption-large" id="line1">Em um mundo que corre contra o tempo...</div>
-    <div class="sub" id="sub1">Acompanhe sinais, orações e ações de paz.</div>
+  <div class="scene">
+    <div class="line" id="line1">Em um mundo que corre contra o tempo...</div>
+    <div class="sub" id="sub1">A profecia encontra o agora.</div>
   </div>
 
-  <div class="hashtag">#Contagem2030</div>
+  <div class="logo-center"><div class="logo" id="logoText">#Contagem2030</div></div>
 
 </div>
 
-  </div>  <!-- Export controls for creators (optional) -->  <div class="controls">
-    <button id="playBtn">▶️ Play</button>
-    <button id="sceneBtn">Próxima Cena</button>
-    <button id="resetBtn">Reiniciar</button>
   </div>  <script>
-    /* CLOCKS: uses Intl to show local times for Jerusalem and São Paulo */
     function updateClocks(){
-      try{
-        const now = new Date();
-        const fmtJ = new Intl.DateTimeFormat('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false,timeZone:'Asia/Jerusalem'});
-        const fmtSP = new Intl.DateTimeFormat('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false,timeZone:'America/Sao_Paulo'});
-        document.getElementById('clock1').textContent = fmtJ.format(now);
-        document.getElementById('clock2').textContent = fmtSP.format(now);
-      }catch(e){
-        console.warn('Clocks error', e);
-      }
+      const now=new Date();
+      const fmtJ=new Intl.DateTimeFormat('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false,timeZone:'Asia/Jerusalem'});
+      const fmtSP=new Intl.DateTimeFormat('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false,timeZone:'America/Sao_Paulo'});
+      document.getElementById('clock1').textContent=fmtJ.format(now);
+      document.getElementById('clock2').textContent=fmtSP.format(now);
     }
-    setInterval(updateClocks, 250);
-    updateClocks();
+    setInterval(updateClocks,250);updateClocks();
 
-    /* SCENE SEQUENCER: basic timeline for trailer-like cuts */
-    const scenes = [
-      {t:0,  line:'Em um mundo que corre contra o tempo...', sub:'A profecia encontra o agora.'},
-      {t:3000,line:'Jerusalém… São Paulo… Sinais que se alinham.', sub:'Acompanhe — observe, ore, aja.'},
-      {t:7000,line:'Acordos que surgem. Mãos que apertam.', sub:'Diplomacia em movimento.'},
-      {t:11000,line:'Tensões sociais e religiosas se intensificam.', sub:'Polarização e debates.'},
-      {t:15000,line:'Reposicionamentos políticos redesenham o tabuleiro.', sub:'Novas alianças.'},
-      {t:19000,line:'Esperança que reacende. Movimento que cresce.', sub:'Movimento messiânico.'},
-      {t:23000,line:'O futuro se aproxima. Permaneça desperto.', sub:'AO VIVO — Monitor Profético • #Contagem2030'}
+    const scenes=[
+      {line:'Em um mundo que corre contra o tempo...',sub:'A profecia encontra o agora.'},
+      {line:'Sinais se alinham sobre as nações.',sub:'Jerusalém • São Paulo'},
+      {line:'Acordos emergem. Vozes se movem.',sub:'Diplomacia acelerada'},
+      {line:'Tensões sociais e fé em conflito.',sub:'Polarização crescente'},
+      {line:'Nações redesenham suas alianças.',sub:'Reposicionamentos políticos'},
+      {line:'Esperança reacende entre o povo.',sub:'Movimento messiânico'},
+      {line:'O futuro se aproxima...',sub:'Permaneça desperto • #Contagem2030'}
     ];
 
-    let timeline = null; let idx=0;
-    const lineEl = document.getElementById('line1');
-    const subEl = document.getElementById('sub1');
-    const logoEl = document.getElementById('logoText');
+    let i=0;
+    const lineEl=document.getElementById('line1');
+    const subEl=document.getElementById('sub1');
+    const logo=document.getElementById('logoText');
 
-    function showScene(i){
-      const s = scenes[i];
-      if(!s) return;
-      // quick cut animation
-      lineEl.classList.remove('fade-in'); subEl.classList.remove('fade-in-slow'); logoEl.style.opacity = '0';
+    function nextScene(){
+      const s=scenes[i];
+      lineEl.classList.remove('fade-in');subEl.classList.remove('fade-in');logo.style.opacity=0;
       void lineEl.offsetWidth;
-      lineEl.textContent = s.line; subEl.textContent = s.sub;
-      lineEl.classList.add('fade-in'); subEl.classList.add('fade-in-slow');
-      // logo pulse on final scene
-      if(i === scenes.length -1){
-        setTimeout(()=>{logoEl.style.opacity = '1';logoEl.classList.add('fade-in')},600);
-      }
+      lineEl.textContent=s.line; subEl.textContent=s.sub;
+      lineEl.classList.add('fade-in'); subEl.classList.add('fade-in');
+      if(i===scenes.length-1){logo.classList.add('fade-pop'); logo.style.opacity=1;}
+      i=(i+1)%scenes.length;
     }
 
-    function startTimeline(){
-      if(timeline) clearInterval(timeline);
-      idx=0; showScene(0);
-      timeline = setInterval(()=>{
-        idx++; if(idx >= scenes.length) { clearInterval(timeline); return; }
-        showScene(idx);
-      },4000);
-    }
+    setInterval(nextScene,3800);
+    nextScene();
 
-    document.getElementById('playBtn').addEventListener('click', ()=>{startTimeline();});
-    document.getElementById('sceneBtn').addEventListener('click', ()=>{ idx = Math.min(idx+1, scenes.length-1); showScene(idx); });
-    document.getElementById('resetBtn').addEventListener('click', ()=>{ if(timeline) clearInterval(timeline); idx=0; showScene(0); logoEl.style.opacity='0'; });
-
-    // Auto-start on load for preview
-    window.addEventListener('load', ()=>{ startTimeline(); });
-
-    /* NOTES FOR CREATORS:
-      - Substitua `assets/placeholder-loop.mp4` por um clipe cinematográfico (16:9) de alta qualidade.
-      - Para exportar como vídeo vertical 9:16 (TikTok), use o mesmo roteiro adaptando `--max-width` ou renderize em um editor de vídeo.
-      - Este HTML é pronto para gravação de tela com OBS Studio ou export via ferramentas Web (headless browser -> ffmpeg).
-      - Se quiser, eu posso gerar também uma versão 9:16, legendas SRT e prompts de imagem/vídeo.
-    */
   </script></body>
 </html>
