@@ -1,314 +1,177 @@
-<!doctype html>
-<html lang="pt-BR">
+<!DOCTYPE html><html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Noticiário Profético 24H — TV</title>
-
-  <!-- Fonte jornalística -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
-
-  <!-- Chart.js (gráfico leve) -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Noticiário Profético 2030</title>
   <style>
-    :root{
-      --bg: #0a0a0a;
-      --panel: #0f0f10;
-      --accent: #d61b1b;
-      --light: #f4f4f4;
-      --muted: #b9b9b9;
-      --glass: rgba(255,255,255,0.03);
+    body{
+      margin:0;
+      background:#000;
+      color:#fff;
+      font-family:Arial, sans-serif;
+      overflow:hidden;
     }
-    html,body{height:100%;margin:0;background:linear-gradient(180deg,#000 0%,#080808 100%);font-family:'Roboto Condensed', Arial, sans-serif;color:var(--light);-webkit-font-smoothing:antialiased}
-    /* Top bar estilo TV */
-    .topbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:10px 14px;
-      background:linear-gradient(90deg, rgba(214,27,27,1) 0%, rgba(180,18,18,1) 100%);
-      box-shadow:0 6px 22px rgba(0,0,0,0.6);
-      position:sticky;top:0;z-index:999;
-      border-bottom:3px solid rgba(0,0,0,0.3);
-    }
-    .brand{
-      display:flex;align-items:center;gap:12px;font-weight:700;font-family:'Oswald', 'Roboto Condensed', sans-serif;font-size:18px;
-    }
-    .live-dot{
-      width:12px;height:12px;border-radius:50%;background:#ff6b6b;box-shadow:0 0 12px rgba(255,0,0,0.45);animation:blink 1s infinite;
-    }
-    @keyframes blink{0%{opacity:1}50%{opacity:.2}100%{opacity:1}}
-
-    .top-right{display:flex;gap:18px;align-items:center;font-weight:600;font-size:13px}
-    .clock{display:flex;flex-direction:column;align-items:flex-end}
-    .clock small{color:var(--muted);font-weight:400}
-
-    /* Layout principal fixo (um quadro só) */
-    .stage{
-      display:flex;
-      gap:14px;
-      padding:14px;
-      box-sizing:border-box;
-      height:calc(100vh - 92px); /* topbar + ticker */
-    }
-
-    .main-panel{
-      flex:1;
-      background:var(--panel);
-      border-radius:12px;
-      padding:16px;
-      box-shadow:0 8px 30px rgba(0,0,0,0.6);
-      border: 2px solid rgba(255,255,255,0.02);
+    .container{
+      width:100vw;
+      height:100vh;
       display:flex;
       flex-direction:column;
-      gap:12px;
-      position:relative;
+      justify-content:space-between;
+      padding:15px;
+      box-sizing:border-box;
+    }
+    h1{
+      text-align:center;
+      margin:0;
+      font-size:1.8rem;
+      color:#ff3333;
+    }
+    .panel{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-start;
+      align-items:center;
+      margin-top:10px;
+      text-align:center;
+    }
+    .prophecy-box{
+      width:95%;
+      background:#111;
+      padding:15px;
+      border-radius:10px;
+      border:2px solid #ff3333;
+      margin-bottom:15px;
+    }
+    .prophecy-box h2{
+      margin-top:0;
+      color:#ff6666;
+    }
+    .global-box{
+      width:95%;
+      background:#111;
+      padding:15px;
+      border-radius:10px;
+      border:2px solid #444;
+      margin-bottom:15px;
+    }
+    .global-box h2{
+      margin-top:0;
+      color:#eeeeee;
+    }
+    .countdown{
+      font-size:1.4rem;
+      margin:10px 0;
+      color:#00eaff;
+    }
+    #chart{
+      width:90%;
+      height:110px;
+      background:#111;
+      border-radius:8px;
+      margin:10px auto;
+      border:1px solid #333;
+    }
+    .ticker{
+      width:100%;
+      background:#222;
       overflow:hidden;
-      transition:transform .4s ease, box-shadow .4s ease;
+      white-space:nowrap;
+      border-top:2px solid #555;
+      padding:8px 0;
+      font-size:1rem;
     }
-    .main-panel:hover{transform:translateY(-4px);box-shadow:0 14px 40px rgba(0,0,0,0.7)}
-
-    /* barra animada superior dentro do painel (decorativa) */
-    .bar-anim{
-      position:absolute;left:0;right:0;top:0;height:6px;background:linear-gradient(90deg,#ff6666,#ff3333,#d61b1b);box-shadow:0 6px 18px rgba(214,27,27,0.12);
-      transform-origin:left;animation:barPulse 3s ease-in-out infinite;
+    .ticker span{
+      display:inline-block;
+      padding-left:100%;
+      animation:scroll 18s linear infinite;
     }
-    @keyframes barPulse{0%{transform:scaleX(.95)}50%{transform:scaleX(1.02)}100%{transform:scaleX(.95)}}
-
-    /* Cabeçalho do conteúdo */
-    .headline{
-      display:flex;justify-content:space-between;align-items:flex-start;gap:10px;
-    }
-    .headline .title{
-      font-family:'Oswald', 'Roboto Condensed', sans-serif;
-      font-size:22px;color:var(--light);font-weight:700;line-height:1.05;
-      text-shadow:0 3px 12px rgba(0,0,0,0.6);
-    }
-    .headline .meta{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
-    .headline .meta .count-large{font-size:18px;color:#fff;background:rgba(0,0,0,0.28);padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03)}
-
-    /* bloco profecias (grande, à esquerda) */
-    .prophecies{
-      display:flex;gap:12px;align-items:stretch;
-    }
-    .prop-box{
-      flex:1;background:linear-gradient(180deg,#0d0d0d,#101010);padding:14px;border-radius:10px;border:2px solid rgba(255,255,255,0.03);
-      transition:transform .35s ease;
-    }
-    .prop-box h3{margin:0 0 8px 0;color:#ffdddd;font-size:16px}
-    .prop-box ul{margin:0;padding-left:16px;color:var(--muted)}
-    .prop-box li{margin:8px 0;font-size:15px}
-
-    /* area direita: gráfico + trends */
-    .side{
-      width:380px;display:flex;flex-direction:column;gap:12px;
-    }
-    .card{
-      background:linear-gradient(180deg,#0b0b0b,#111111);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);
-      box-shadow:0 8px 24px rgba(0,0,0,0.5);
-    }
-    .card h4{margin:0 0 8px 0;font-size:15px;color:#ffd}
-
-    /* gráfico pequeno */
-    #miniChart{width:100%;height:140px;background:transparent;border-radius:6px}
-
-    /* ticker inferior (mais parecido com TV) */
-    .ticker-wrap{
-      position:fixed;left:0;right:0;bottom:0;height:48px;background:#0b0b0b;border-top:3px solid rgba(214,27,27,0.15);z-index:9999;display:flex;align-items:center;
-    }
-    .ticker-inner{overflow:hidden;white-space:nowrap;padding-left:20px;font-weight:700;}
-    .ticker-inner .track{display:inline-block;padding-right:120px;color:#fff;animation:marquee 24s linear infinite}
-    @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
-
-    /* footer small bible */
-    .footer-bible{position:fixed;left:14px;bottom:58px;background:rgba(0,0,0,0.45);padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);font-size:13px;color:#ffd}
-
-    /* responsive */
-    @media (max-width:900px){
-      .stage{flex-direction:column;height:calc(100vh - 92px);padding:10px}
-      .side{width:auto;order:2}
-      .main-panel{order:1}
+    @keyframes scroll{
+      0%{ transform:translateX(0); }
+      100%{ transform:translateX(-100%); }
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h1>🔔 Noticiário Profético 2030</h1><div class="panel">
 
-  <div class="topbar">
-    <div class="brand"><span class="live-dot" aria-hidden="true"></span> 🔴 AO VIVO — NOTICIÁRIO 24H</div>
-    <div class="top-right">
-      <div class="clock"><div style="font-weight:700">🇮🇱 Israel</div><small id="clockIL">--:--:--</small></div>
-      <div class="clock"><div style="font-weight:700">🇺🇸 EUA (NY)</div><small id="clockUS">--:--:--</small></div>
-      <div class="clock"><div style="font-weight:700">Contagem</div><small id="countdownSmall">-- dias</small></div>
-    </div>
+  <!-- PROFECIAS PRIMEIRO -->
+  <div class="prophecy-box">
+    <h2>📜 3 Profecias Bíblicas</h2>
+    <ul style="text-align:left; font-size:1.1rem;">
+      <li>⚠ "Rumores de guerras e nações contra nações"</li>
+      <li>🌑 "Sinais no céu, na lua e nas estrelas"</li>
+      <li>🌍 "O aumento do conhecimento e aceleração global"</li>
+    </ul>
   </div>
 
-  <div class="stage">
-    <div class="main-panel" role="main" aria-live="polite">
-      <div class="bar-anim" aria-hidden="true"></div>
-
-      <div class="headline">
-        <div class="title">🔴 ALERTA PROFÉTICO — 3 SINAIS EM EVIDÊNCIA</div>
-        <div class="meta">
-          <div class="count-large" id="countdownBig">Carregando...</div>
-          <div style="font-size:12px;color:var(--muted)">Última atualização: <span id="lastUpdate">—</span></div>
-        </div>
-      </div>
-
-      <div class="prophecies" aria-hidden="false">
-        <div class="prop-box">
-          <h3>1) Restauração e foco em Israel</h3>
-          <p style="color:var(--muted);margin:6px 0 0 0">Aumento de eventos políticos e debates que mantêm Jerusalém no centro das atenções globais.</p>
-        </div>
-
-        <div class="prop-box">
-          <h3>2) Rumores de conflitos</h3>
-          <p style="color:var(--muted);margin:6px 0 0 0">Crescente movimentação militar e tensões entre potências — cenário de incertezas.</p>
-        </div>
-
-        <div class="prop-box">
-          <h3>3) Sinais na natureza</h3>
-          <p style="color:var(--muted);margin:6px 0 0 0">Fenômenos climáticos e eventos celestes despertam debates públicos e espirituais.</p>
-        </div>
-      </div>
-
-      <!-- Notícia em destaque (abaixo das profecias) -->
-      <div style="margin-top:10px;background:var(--glass);padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.03)">
-        <strong style="font-size:16px">Notícia em destaque</strong>
-        <div id="featured" style="font-size:18px;margin-top:8px;color:#fff">Sinais globais chamam atenção de líderes — exemplo de manchete.</div>
-      </div>
-
-    </div>
-
-    <aside class="side" role="complementary">
-      <div class="card" aria-hidden="false">
-        <h4>Simulação: Preço (BTC / USD)</h4>
-        <canvas id="miniChart"></canvas>
-        <div style="display:flex;justify-content:space-between;margin-top:8px;align-items:center">
-          <button id="toggleAsset" style="background:transparent;border:1px solid rgba(255,255,255,0.06);padding:6px 10px;border-radius:6px;color:var(--light);cursor:pointer">Ativo: BTC</button>
-          <small style="color:var(--muted)" id="chartTime">—</small>
-        </div>
-      </div>
-
-      <div class="card" aria-hidden="false">
-        <h4>Top 3 Notícias Globais</h4>
-        <ol id="newsList" style="margin:0;padding-left:18px;color:var(--muted)">
-          <li>Tensões internacionais crescem entre grandes potências.</li>
-          <li>Avanços tecnológicos remodelam a economia mundial.</li>
-          <li>Mudanças climáticas geram debates urgentes entre países.</li>
-        </ol>
-      </div>
-    </aside>
+  <!-- NOTÍCIAS GLOBAIS -->
+  <div class="global-box">
+    <h2>🌐 3 Notícias Globais</h2>
+    <ul style="text-align:left; font-size:1.05rem;">
+      <li>• Tensões internacionais crescem entre grandes potências.</li>
+      <li>• Avanços tecnológicos remodelam a economia mundial.</li>
+      <li>• Mudanças climáticas geram debates urgentes entre países.</li>
+    </ul>
   </div>
 
-  <!-- ticker inferior -->
-  <div class="ticker-wrap" role="status" aria-live="polite">
-    <div class="ticker-inner"><div class="track" id="tickerTrack">📰 Últimas: transmissão profética 24h • Atualize para ver manchetes reais • Mantenha o site aberto para transmissão contínua •</div></div>
-  </div>
+  <div class="countdown" id="countdown">Carregando contagem...</div>
 
-  <div class="footer-bible" id="bibleMsg">“O Senhor dá força ao seu povo; o Senhor abençoa com paz ao seu povo.” — Salmo 29:11</div>
+  <canvas id="chart"></canvas>
 
-  <script>
-    // ---------- Relógios ----------
-    function updateClocks(){
-      const now = new Date();
-      const il = new Date(now.toLocaleString('en-US',{timeZone:'Asia/Jerusalem'}));
-      const ny = new Date(now.toLocaleString('en-US',{timeZone:'America/New_York'}));
-      document.getElementById('clockIL').innerText = il.toLocaleTimeString();
-      document.getElementById('clockUS').innerText = ny.toLocaleTimeString();
-    }
-    setInterval(updateClocks,1000);
-    updateClocks();
+</div>
 
-    // ---------- Contagem regressiva (Big + Small) ----------
-    const target = new Date('2030-01-01T00:00:00Z').getTime();
-    function updateCountdown(){
-      const now = Date.now();
-      let diff = target - now;
-      if(diff <= 0){ document.getElementById('countdownBig').innerText = 'É 2030!'; document.getElementById('countdownSmall').innerText = '0 dias'; return; }
-      const days = Math.floor(diff / (1000*60*60*24));
-      const hours = Math.floor((diff / (1000*60*60)) % 24);
-      const mins = Math.floor((diff / (1000*60)) % 60);
-      const secs = Math.floor((diff / 1000) % 60);
-      // visual chamativo para a live
-      document.getElementById('countdownBig').innerHTML = `<span style="font-size:18px;color:#fff;display:block">${days} dias</span><span style="font-size:12px;color:var(--muted)">${hours}h ${mins}m ${secs}s</span>`;
-      document.getElementById('countdownSmall').innerText = `${days}d`;
-    }
-    setInterval(updateCountdown,1000);
-    updateCountdown();
+<div class="ticker"><span id="tickerText">Carregando notícias proféticas...</span></div>
 
-    // ---------- Gráfico (Chart.js) simulado ----------
-    const ctx = document.getElementById('miniChart').getContext('2d');
-    let asset = 'BTC';
-    function generateSeries(base){
-      const labels=[]; const data=[];
-      let v = base;
-      for(let i=0;i<30;i++){
-        v = +(v * (1 + (Math.random()-0.48)/100)).toFixed(2);
-        labels.push('');
-        data.push(v);
-      }
-      return {labels,data};
-    }
-    let basePrice=60000;
-    const init = generateSeries(basePrice);
-    const miniChart = new Chart(ctx, {
-      type:'line',
-      data:{ labels:init.labels, datasets:[{data:init.data, borderColor:'#ff6666', borderWidth:2, pointRadius:0, tension:0.25}]},
-      options:{ animation:false, plugins:{legend:{display:false}}, scales:{x:{display:false}, y:{ticks:{color:'#fff'}}}
-    });
-    function stepChart(){
-      const last = miniChart.data.datasets[0].data.slice(-1)[0] || basePrice;
-      const next = +(last * (1 + (Math.random()-0.48)/100)).toFixed(2);
-      miniChart.data.datasets[0].data.push(next);
-      miniChart.data.labels.push('');
-      if(miniChart.data.labels.length > 50){ miniChart.data.labels.shift(); miniChart.data.datasets[0].data.shift(); }
-      miniChart.update('none');
-      document.getElementById('chartTime').innerText = new Date().toLocaleTimeString();
-    }
-    setInterval(stepChart,5000);
+  </div><script>
+// CONTAGEM 2030
+function updateCountdown(){
+  const target = new Date("Jan 1, 2030 00:00:00").getTime();
+  const now = Date.now();
+  const diff = target - now;
 
-    document.getElementById('toggleAsset').addEventListener('click', ()=>{
-      asset = asset === 'BTC' ? 'USD' : 'BTC';
-      document.getElementById('toggleAsset').innerText = 'Ativo: ' + asset;
-      // reset chart with different base
-      basePrice = asset === 'BTC' ? 60000 : 1.00;
-      const s = generateSeries(basePrice);
-      miniChart.data.labels = s.labels; miniChart.data.datasets[0].data = s.data; miniChart.update();
-    });
+  const d = Math.floor(diff / (1000*60*60*24));
+  const h = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  const m = Math.floor((diff%(1000*60*60))/(1000*60));
+  const s = Math.floor((diff%(1000*60))/1000);
 
-    // ---------- Ticker (texto longo para parecer TV) ----------
-    const ticker = document.getElementById('tickerTrack');
-    function updateTicker(text){
-      ticker.innerText = '📰 ' + text + ' • ';
-    }
-    // ciclo de mensagens para parecer dinâmico
-    const ticks = [
-      'Transmissão AO VIVO — Noticiário Profético 24h • Fique conectado para atualizações contínuas',
-      'Alerta: mantenha-se informado — eventos em destaque sobre geopolítica e sinais naturais',
-      'Dica: para dados reais, configure suas APIs no painel de deploy (Netlify Functions).'
-    ];
-    let tI = 0;
-    function rotateTicker(){
-      updateTicker(ticks[tI]);
-      tI = (tI + 1) % ticks.length;
-    }
-    rotateTicker();
-    setInterval(rotateTicker,10000);
+  document.getElementById("countdown").textContent = 
+    `⏳ Faltam ${d} dias, ${h}h ${m}m ${s}s para 2030`;
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
 
-    // ---------- Última atualização visual ----------
-    function stampUpdate(){ document.getElementById('lastUpdate').innerText = new Date().toLocaleTimeString(); }
-    setInterval(stampUpdate,15000); stampUpdate();
+// GRÁFICO SIMULADO
+const ctx = document.getElementById("chart").getContext("2d");
+let x = 0;
+function draw(){
+  ctx.fillStyle = "black";
+  ctx.fillRect(0,0,400,200);
+  ctx.strokeStyle = "#ff3333";
+  ctx.beginPath();
+  for(let i=0;i<300;i++){
+    ctx.lineTo(i, 60 + Math.sin((i + x)/20)*30);
+  }
+  ctx.stroke();
+  x+=2;
+  requestAnimationFrame(draw);
+}
+draw();
 
-    // ---------- acessibilidade: pausa do ticker ao foco (mobile friendly) ----------
-    document.querySelector('.ticker-wrap')?.addEventListener('touchstart', ()=>{ document.querySelector('.track').style.animationPlayState='paused'; });
-    document.querySelector('.ticker-wrap')?.addEventListener('touchend', ()=>{ document.querySelector('.track').style.animationPlayState='running'; });
-
-    // small performance: reduce rendering when page hidden
-    document.addEventListener('visibilitychange', ()=>{
-      if(document.hidden){ clearInterval(window._chartInterval); } else { window._chartInterval = setInterval(stepChart,5000); }
-    });
-    window._chartInterval = setInterval(stepChart,5000);
-  </script>
-</body>
+// TICKER
+const profeticNews = [
+  "Profecia aponta aumento de tensões globais...",
+  "Israel e nações em destaque no cenário profético...",
+  "Tecnologia acelerando como previsto em Daniel...",
+  "Mudanças climáticas em paralelo com Mateus 24..."
+];
+let index = 0;
+function rotateTicker(){
+  document.getElementById("tickerText").textContent = profeticNews[index];
+  index = (index + 1) % profeticNews.length;
+}
+rotateTicker();
+setInterval(rotateTicker, 10000);
+</script></body>
 </html>
