@@ -1,86 +1,81 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Noticiário 24h</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Noticiário Profético 24h — Preview</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Chart.js CDN (para gráfico leve) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
-<div class="tv-header">🔴 AO VIVO — NOTICIÁRIO 24H</div>
 
-<div id="content"></div>
+  <header class="topbar">
+    <div class="left">
+      <span class="live-dot"></span>
+      AO VIVO — NOTICIÁRIO 24H
+    </div>
+    <div class="right clocks">
+      <div class="clock">🇮🇱 Israel: <span id="clock-israel">--:--:--</span></div>
+      <div class="clock">🇺🇸 EUA (NY): <span id="clock-usa">--:--:--</span></div>
+      <div class="clock small">Contagem até 2030: <span id="countdown">carregando...</span></div>
+    </div>
+  </header>
 
-<script src="script.js"></script>
+  <main class="container">
+    <section class="left-panel">
+      <div class="card" id="headlineCard">
+        <h2>Notícia em destaque</h2>
+        <div id="featured">Carregando destaque...</div>
+      </div>
+
+      <div class="card" id="globalNews">
+        <h3>Notícias Globais</h3>
+        <ul id="newsList">
+          <li>Carregando notícias...</li>
+        </ul>
+      </div>
+
+      <div class="card prophetic">
+        <h3>Tópicos Proféticos</h3>
+        <ol id="propheticList">
+          <li>1 — Sinais nos céus e mudanças geopolíticas</li>
+          <li>2 — Movimento de nações e colheitas espirituais</li>
+          <li>3 — Aumento de revelação e perseguição</li>
+        </ol>
+      </div>
+    </section>
+
+    <aside class="right-panel">
+      <div class="card chart-card">
+        <h3>Simulação: Cripto / Dólar (pequena)</h3>
+        <canvas id="miniChart" width="300" height="180"></canvas>
+        <div class="chart-controls">
+          <button id="toggleAsset">Ativo: BTC</button>
+          <small id="chartInfo">Última atualização: <span id="chartTime">-</span></small>
+        </div>
+      </div>
+
+      <div class="card trends-card">
+        <h3>Top 5 tendências do Google</h3>
+        <ol id="trendsList">
+          <li>Carregando tendências...</li>
+        </ol>
+      </div>
+    </aside>
+  </main>
+
+  <!-- TICKER rodando embaixo -->
+  <div class="ticker-wrap" aria-hidden="true">
+    <div class="ticker" id="ticker">
+      <span>Carregando feed do ticker...</span>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div id="bibleMessage">“O Senhor dá força ao seu povo; o Senhor abençoa com paz ao seu povo.” — Salmo 29:11</div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
-body {
-  margin: 0;
-  background: #000;
-  color: #fff;
-  font-family: Arial, sans-serif;
-}
-
-/* CABEÇALHO ESTILO CNN / GLOBO NEWS */
-.header {
-  background: #d00;
-  padding: 15px;
-  text-align: center;
-  font-size: 22px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  color: white;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-
-.live-dot {
-  height: 12px;
-  width: 12px;
-  background: #ff4b4b;
-  border-radius: 50%;
-  display: inline-block;
-  margin-right: 8px;
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-  0% { opacity: 1; }
-  50% { opacity: 0.2; }
-  100% { opacity: 1; }
-}
-
-/* BARRA DE RELÓGIOS */
-.clock-bar {
-  display: flex;
-  justify-content: space-around;
-  background: #111;
-  padding: 10px;
-  border-bottom: 2px solid #222;
-}
-
-.clock-box {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-/* ÁREA DE NOTÍCIAS */
-#news-area {
-  padding: 25px;
-  text-align: left;
-  font-size: 26px;
-  line-height: 1.4;
-}
-
-/* RODAPÉ BÍBLICO */
-.bible-footer {
-  background: #111;
-  padding: 15px;
-  text-align: center;
-  font-size: 20px;
-  color: #ffd;
-  position: sticky;
-  bottom: 0;
-  border-top: 2px solid #222;
-}
