@@ -3,42 +3,57 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Noticiário Profético 24h — Atualizado</title>
+  <title>Noticiário Profético 24h — AO VIVO</title>
 
-  <!-- Tailwind CDN (versão leve para testes – ideal instalar via build depois) -->
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-
   <style>
-    /* Ticker animation */
+    /* Ticker */
     @keyframes marquee {
-      from { transform: translateX(0%); }
+      from { transform: translateX(0); }
       to { transform: translateX(-50%); }
     }
     .marquee {
-      animation: marquee 18s linear infinite;
+      animation: marquee 14s linear infinite;
       white-space: nowrap;
       display: inline-block;
     }
+
+    /* Efeito de alerta pulsando */
+    @keyframes pulse-strong {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: .4; transform: scale(1.12); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .pulse-strong {
+      animation: pulse-strong .9s infinite;
+    }
   </style>
 </head>
-<body class="bg-slate-100 text-slate-900">
+
+<body class="bg-black text-red-500">
 
   <!-- HEADER -->
-  <header class="bg-white shadow-sm sticky top-0 z-20">
-    <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
+  <header class="bg-black border-b border-red-700 sticky top-0 z-20">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+
       <div class="flex items-center gap-3">
-        <span class="w-3 h-3 rounded-full bg-red-500 animate-pulse"></span>
-        <span class="font-semibold">AO VIVO — NOTICIÁRIO 24H</span>
+        <span class="w-4 h-4 rounded-full bg-red-600 pulse-strong"></span>
+        <span class="font-extrabold text-red-500 text-xl tracking-widest">
+          🔴 AO VIVO — NOTICIÁRIO 24H
+        </span>
       </div>
 
-      <div class="flex gap-4 items-center text-sm">
+      <div class="flex flex-col items-end text-sm font-bold">
         <div>🇮🇱 Israel: <span id="clock-israel">--:--:--</span></div>
         <div>🇺🇸 NY: <span id="clock-usa">--:--:--</span></div>
-        <div>2030: <span id="countdown">carregando...</span></div>
+        <div class="text-red-400 text-lg mt-1 pulse-strong">
+          CONTAGEM AO VIVO: <span id="liveCounter">00:00:00</span>
+        </div>
+        <div class="text-xs">Rumo a 2030: <span id="countdown">carregando...</span></div>
       </div>
+
     </div>
   </header>
 
@@ -49,23 +64,21 @@
     <section class="lg:col-span-2 space-y-6">
 
       <!-- Destaque -->
-      <div class="bg-white p-4 rounded-2xl shadow">
-        <h2 class="text-xl font-bold">Notícia em destaque</h2>
-        <div id="featured" class="mt-2 text-lg">Carregando destaque...</div>
+      <div class="bg-black border border-red-700 p-4 rounded-xl shadow">
+        <h2 class="text-2xl font-bold text-red-400">ÚLTIMA NOTÍCIA</h2>
+        <div id="featured" class="mt-2 text-xl font-semibold">Carregando...</div>
       </div>
 
       <!-- Notícias Globais -->
-      <div class="bg-white p-4 rounded-2xl shadow">
-        <h3 class="text-lg font-semibold">Notícias Globais</h3>
-        <ul id="newsList" class="mt-3 list-disc list-inside space-y-2">
-          <li>Carregando...</li>
-        </ul>
+      <div class="bg-black border border-red-700 p-4 rounded-xl shadow">
+        <h3 class="text-xl font-bold text-red-400">Notícias Globais</h3>
+        <ul id="newsList" class="mt-3 list-disc list-inside space-y-2"></ul>
       </div>
 
       <!-- Profético -->
-      <div class="bg-yellow-50 p-4 rounded-2xl shadow">
-        <h3 class="text-lg font-semibold">Tópicos Proféticos</h3>
-        <ol class="mt-3 list-decimal list-inside space-y-1">
+      <div class="bg-black border border-red-700 p-4 rounded-xl shadow">
+        <h3 class="text-xl font-bold text-red-400">Tópicos Proféticos</h3>
+        <ol class="mt-3 list-decimal list-inside space-y-2 text-red-300">
           <li>Sinais nos céus e mudanças geopolíticas</li>
           <li>Movimento de nações e colheitas espirituais</li>
           <li>Aumento de revelação e perseguição</li>
@@ -77,43 +90,24 @@
     <!-- RIGHT -->
     <aside class="space-y-6">
 
-      <!-- Chart -->
-      <div class="bg-white p-4 rounded-2xl shadow">
-        <h3 class="text-lg font-semibold">Simulação: Cripto / Dólar</h3>
-
-        <canvas id="miniChart" class="w-full h-40 mt-3"></canvas>
-
-        <div class="mt-3 flex items-center justify-between">
-          <button id="toggleAsset"
-            class="px-3 py-1 bg-slate-200 rounded-md">
-            Ativo: BTC
-          </button>
-          <small>Atualização: <span id="chartTime">-</span></small>
-        </div>
-      </div>
-
       <!-- Tendências -->
-      <div class="bg-white p-4 rounded-2xl shadow">
-        <h3 class="text-lg font-semibold">Top 5 tendências</h3>
-        <ol id="trendsList" class="mt-3 list-decimal list-inside space-y-2">
-          <li>Carregando...</li>
-        </ol>
+      <div class="bg-black border border-red-700 p-4 rounded-xl shadow">
+        <h3 class="text-xl font-bold text-red-400">Top 5 Tendências</h3>
+        <ol id="trendsList" class="mt-3 list-decimal list-inside space-y-2 text-red-300"></ol>
       </div>
 
     </aside>
   </main>
 
   <!-- Ticker -->
-  <div class="bg-slate-900 text-white py-2 overflow-hidden">
+  <div class="bg-red-700 text-black text-lg font-bold py-2 overflow-hidden border-t border-red-900">
     <div class="max-w-7xl mx-auto px-4">
-      <div class="marquee" id="ticker">
-        Carregando ticker...
-      </div>
+      <div class="marquee" id="ticker">Carregando ticker...</div>
     </div>
   </div>
 
   <!-- Footer -->
-  <footer class="max-w-7xl mx-auto px-4 py-6 text-center text-sm text-slate-600">
+  <footer class="text-center text-xs text-red-700 py-4 border-t border-red-800 mt-6">
     “O Senhor dá força ao seu povo; o Senhor abençoa com paz ao seu povo.” — Salmo 29:11
   </footer>
 
@@ -122,16 +116,11 @@
     function updateClocks() {
       const now = new Date();
 
-      const israel = now.toLocaleTimeString("pt-BR", {
-        timeZone: "Asia/Jerusalem"
-      });
+      document.getElementById("clock-israel").textContent =
+        now.toLocaleTimeString("pt-BR", { timeZone: "Asia/Jerusalem" });
 
-      const ny = now.toLocaleTimeString("pt-BR", {
-        timeZone: "America/New_York"
-      });
-
-      document.getElementById("clock-israel").textContent = israel;
-      document.getElementById("clock-usa").textContent = ny;
+      document.getElementById("clock-usa").textContent =
+        now.toLocaleTimeString("pt-BR", { timeZone: "America/New_York" });
 
       const target = new Date("2030-01-01T00:00:00Z");
       const diff = target - now;
@@ -147,97 +136,39 @@
     setInterval(updateClocks, 1000);
     updateClocks();
 
+    /* ------------------------ CONTAGEM AO VIVO ------------------------- */
+    let liveSeconds = 0;
+    setInterval(() => {
+      liveSeconds++;
+      const h = String(Math.floor(liveSeconds / 3600)).padStart(2, "0");
+      const m = String(Math.floor((liveSeconds % 3600) / 60)).padStart(2, "0");
+      const s = String(liveSeconds % 60).padStart(2, "0");
+      document.getElementById("liveCounter").textContent = `${h}:${m}:${s}`;
+    }, 1000);
+
     /* ---------------------- DADOS SIMULADOS --------------------------- */
     const fakeNews = [
       "Conferência internacional reúne líderes mundiais",
-      "Movimentos geopolíticos chamam atenção de analistas",
-      "Iniciativa humanitária ganha força global"
+      "Movimentos geopolíticos aumentam tensão global",
+      "Iniciativa humanitária avança em diversas regiões"
     ];
-
     const fakeTrends = [
       "Profecias 2030",
-      "Guerra e paz",
-      "Economia global",
-      "Israel hoje",
-      "Tecnologias emergentes"
+      "Conflitos no Oriente Médio",
+      "Mercados em alerta",
+      "Tecnologia e vigilância",
+      "Mudanças climáticas"
     ];
-
     const fakeTicker = [
-      "BRL/USD 5.12",
-      "BTC 47.200 USD",
-      "Doações crescem 12%",
-      "Rota marítima sofre restrições"
+      "ALERTA: Nova movimentação em regiões estratégicas",
+      "ÚLTIMA HORA: Mudança repentina nos mercados globais",
+      "BREAKING: Sinais crescentes de incerteza internacional"
     ];
 
     document.getElementById("featured").textContent = fakeNews[0];
-    document.getElementById("newsList").innerHTML =
-      fakeNews.map(n => `<li>${n}</li>`).join("");
-
-    document.getElementById("trendsList").innerHTML =
-      fakeTrends.map(t => `<li>${t}</li>`).join("");
-
-    document.getElementById("ticker").textContent =
-      fakeTicker.join("   •   ");
-
-    /* --------------------------- GRÁFICO ------------------------------ */
-    let asset = "BTC";
-
-    const ctx = document.getElementById("miniChart");
-    let chart;
-
-    function generateData() {
-      const labels = Array.from({ length: 12 }, (_, i) => i);
-
-      const base = asset === "BTC" ? 48000 : 5.12;
-      const factor = asset === "BTC" ? 1200 : 0.03;
-
-      const data = labels.map(i =>
-        Number((base + Math.sin(i / 2) * factor + i * 20).toFixed(2))
-      );
-
-      return { labels, data };
-    }
-
-    function renderChart() {
-      const { labels, data } = generateData();
-
-      if (chart) chart.destroy();
-
-      chart = new Chart(ctx, {
-        type: "line",
-        data: {
-          labels,
-          datasets: [{
-            label: asset,
-            data,
-            borderWidth: 2,
-            tension: 0.3
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false }
-          },
-          scales: {
-            x: { display: false }
-          }
-        }
-      });
-
-      document.getElementById("chartTime").textContent =
-        new Date().toLocaleTimeString();
-    }
-
-    renderChart();
-
-    document.getElementById("toggleAsset").onclick = () => {
-      asset = asset === "BTC" ? "USD" : "BTC";
-      document.getElementById("toggleAsset").textContent = "Ativo: " + asset;
-      renderChart();
-    };
+    document.getElementById("newsList").innerHTML = fakeNews.map(n => `<li>${n}</li>`).join("");
+    document.getElementById("trendsList").innerHTML = fakeTrends.map(t => `<li>${t}</li>`).join("");
+    document.getElementById("ticker").textContent = fakeTicker.join("   •   ");
   </script>
-
 </body>
 </html>
