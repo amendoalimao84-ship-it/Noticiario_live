@@ -1,416 +1,160 @@
 <!doctype html>
+
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-<title>Eventos Proféticos — Contagem 2030</title>
+<title>Sinais & Acordos — Versão Melhorada</title>
 <style>
-  /* =======================
-     CONFIG / RESET
-     ======================= */
-  :root{
-    --bg1: #04050a;
-    --bg2: #07102a;
-    --card: rgba(255,255,255,0.03);
-    --accent-red: #d72631;
-    --accent-yellow: #ffd400;
-    --muted: #9fb0c9;
-    --glass: rgba(255,255,255,0.04);
-    --text: #f4f7fb;
-    --gold: #ffd48a;
+  body {
+    margin: 0;
+    background: radial-gradient(circle at top, #0a0f1c, #06070d 70%);
+    font-family: Arial, sans-serif;
+    color: #fff;
   }
-  *{box-sizing:border-box}
-  html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg1),var(--bg2));font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;color:var(--text);-webkit-font-smoothing:antialiased}
-  /* Force vertical frame similar to phone/stream canvas */
-  .canvas{width:1080px;height:1920px;max-width:100vw;max-height:100vh;margin:0 auto;position:relative;overflow:hidden;border-radius:16px;box-shadow:0 40px 120px rgba(0,0,0,0.6);background:linear-gradient(180deg, rgba(3,7,18,0.8), rgba(3,7,18,0.95));}
-
-  /* ========== BACKDROP ELEMENTS ========== */
-  .bg-layers{position:absolute;inset:0;pointer-events:none;z-index:0}
-/* soft heavenly rays */
-  .rays{position:absolute;inset:-20% -10% auto -10%;height:70%;background:radial-gradient(ellipse at 50% 20%, rgba(255,216,140,0.06), transparent 20%), radial-gradient(ellipse at 80% 10%, rgba(255,120,96,0.03), transparent 10%);mix-blend-mode:screen;filter:blur(18px);transform:rotate(-6deg);opacity:0.95}
-  /* cinematic pulse */
-  .pulse-center{position:absolute;left:50%;top:47%;width:900px;height:900px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle, rgba(215,38,49,0.06), rgba(0,0,0,0));animation:pulse 6s ease-in-out infinite;filter:blur(6px)}
-  @keyframes pulse{0%{transform:translate(-50%,-50%) scale(0.98);opacity:0.6}50%{transform:translate(-50%,-50%) scale(1.06);opacity:1}100%{transform:translate(-50%,-50%) scale(0.98);opacity:0.6}}
-
-  /* particles subtle */
-  .particle{position:absolute;width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.06);box-shadow:0 0 8px rgba(0,0,0,0.2);animation:drift linear infinite}
-  @keyframes drift{from{transform:translateY(-8vh)}to{transform:translateY(120vh)}}
-
-  /* ========== TOP HEADER / CLOCKS ========== */
-  header{position:relative;z-index:6;padding:34px 56px 8px 56px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
-  .brand{display:flex;flex-direction:column;gap:6px}
-  .title{font-size:42px;font-weight:800;letter-spacing:-0.02em;color:var(--text);text-transform:uppercase}
-  .subtitle{font-size:14px;color:var(--muted);font-weight:600}
-  .clocks{display:flex;gap:12px;align-items:center}
-  .clock{background:var(--glass);backdrop-filter:blur(6px);padding:10px 14px;border-radius:10px;min-width:220px;text-align:center}
-  .clock .city{font-size:12px;color:var(--muted);font-weight:700}
-  .clock .time{font-size:20px;font-weight:800}
-
-  /* ========== BREAKING (NOTICIÁRIO) STRIP ========== */
-  .breaking{
-    position:relative;z-index:7;margin:14px 56px 0 56px;border-radius:8px;overflow:hidden;display:flex;align-items:center;
-    background:linear-gradient(90deg,var(--accent-red),#b61a22);box-shadow:0 6px 18px rgba(215,38,49,0.12);padding:10px 14px;gap:12px
+  .container {
+    padding: 22px;
   }
-  .breaking .tag{background:var(--accent-yellow);color:#0b0b0b;padding:6px 10px;border-radius:6px;font-weight:800;font-size:14px}
-  .breaking .headline{font-weight:800;color:#fff;letter-spacing:0.01em;font-size:18px;flex:1}
-  /* thin highlight sweep */
-  .breaking::after{content:'';position:absolute;top:0;left:-30%;width:30%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);transform:skewX(-12deg);animation:breakShine 22s linear infinite}
-  @keyframes breakShine{0%{left:-30%}100%{left:130%}}
-
-  /* ========== MAIN CARD AREA ========== */
-  main{position:relative;z-index:6;padding:22px 56px 40px 56px;display:flex;gap:22px;flex-direction:column;height:calc(100% - 260px);overflow:hidden}
-  .grid{display:grid;grid-template-columns: 1fr 1fr;gap:22px;align-items:start}
-
-/* left column: features + ticker */
-  .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:18px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.02)}
-  .features h3{margin:0;font-size:18px;color:var(--gold);letter-spacing:0.02em}
-  .feature{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px dashed rgba(255,255,255,0.02)}
-  .feature:last-child{border-bottom:0}
-  .dot{width:12px;height:12px;border-radius:50%;background:var(--accent-red);margin-top:6px;box-shadow:0 3px 10px rgba(215,38,49,0.25)}
-  .feature p{margin:0;color:#e9f2ff;font-size:14px;line-height:1.3}
-  .muted-small{font-size:11px;color:var(--muted);margin-top:8px}
-
-/* ticker style */
-  .ticker-wrap{margin-top:12px;overflow:hidden;border-radius:10px;background:rgba(255,255,255,0.02);padding:10px}
-  .ticker{display:inline-block;white-space:nowrap;will-change:transform;animation:scrollTicker linear infinite}
-  .ticket{display:inline-block;padding:8px 14px;margin-right:20px;border-radius:200px;background:rgba(255,255,255,0.03);font-weight:700;color:var(--gold);font-size:14px}
-  @keyframes scrollTicker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-
-/* right column: countdown + verse + micro-graph */
-  .countdown-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:22px;border-radius:14px;min-height:330px}
-  .bigcount{font-weight:900;font-size:72px;letter-spacing:-0.02em;color:#fff}
-  .segrow{display:flex;gap:10px}
-  .seg{background:rgba(255,255,255,0.03);padding:12px 16px;border-radius:12px;min-width:96px;text-align:center}
-  .seg .num{font-size:28px;font-weight:900;color:var(--gold)}
-  .seg .lbl{font-size:11px;color:var(--muted);font-weight:700;margin-top:6px}
-
-/* verse box */
-  .verse{margin-top:12px;background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent);padding:14px;border-radius:10px;text-align:center;font-weight:700;color:#fff}
-  .verse small{display:block;color:var(--muted);font-weight:600;margin-top:6px}
-
-/* micro graph */
-  .micrograph{width:100%;height:72px;border-radius:10px;overflow:hidden;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));display:flex;align-items:center;justify-content:center;position:relative}
-  .graph-line{height:3px;width:220%;background:linear-gradient(90deg,#ffd400,#ff9b3d,#ffd400);animation:graphMove 7s linear infinite}
-  @keyframes graphMove{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-
-/* ========== LOWER THIRD / STINGER ========== */
-  .lower-third{position:absolute;left:56px;right:56px;bottom:56px;padding:12px 18px;border-radius:12px;background:linear-gradient(90deg, rgba(0,0,0,0.5), rgba(0,0,0,0.35));display:flex;align-items:center;gap:14px;z-index:8;backdrop-filter:blur(6px)}
-  .lt-pill{background:var(--accent-yellow);color:#000;padding:6px 10px;border-radius:999px;font-weight:900}
-  .lt-text{font-weight:800;font-size:18px}
-  .lt-sub{font-size:12px;color:var(--muted);font-weight:700}
-
-/* minute flare sync */
-  .flare{position:absolute;left:calc(50% - 160px);top:24%;width:320px;height:6px;border-radius:999px;background:linear-gradient(90deg,transparent, #ffd400, transparent);opacity:0;transform:scaleX(0);pointer-events:none;z-index:9;filter:blur(6px)}
-
-/* accessible hide for screen smallers */
-  @media (max-width:720px){
-    .canvas{width:360px;height:640px;border-radius:10px}
-    header{padding:18px}
-    main{padding:12px}
-    .title{font-size:24px}
-    .clock{min-width:120px;padding:8px}
-    .bigcount{font-size:36px}
-    .lower-third{left:18px;right:18px;bottom:18px}
+  header {
+    margin-bottom: 30px;
   }
-
-  /* reduce-motion respect */
-  @media (prefers-reduced-motion: reduce){
-    .pulse-center,.rays,.particle,.graph-line,.ticker,.breaking::after{animation: none !important}
+  header h1 {
+    font-size: 32px;
+    font-weight: 800;
+    margin: 0 0 6px;
+  }
+  header .sub {
+    opacity: 0.8;
+    font-size: 16px;
+  }
+  .clocks {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .clock {
+    background: rgba(255,255,255,0.05);
+    padding: 12px 18px;
+    border-radius: 14px;
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .clock .city {
+    font-size: 13px;
+    opacity: 0.7;
+    margin-bottom: 2px;
+  }
+  .clock .time {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .breaking {
+    background: linear-gradient(90deg, #ff3737, #b80000);
+    margin-top: 28px;
+    padding: 16px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .breaking .tag {
+    background: #ffeb00;
+    color: #000;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 14px;
+  }
+  h2 {
+    font-size: 22px;
+    margin-top: 34px;
+  }
+  .feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 14px 0;
+  }
+  .feature .dot {
+    width: 11px;
+    height: 11px;
+    background: #ff3838;
+    border-radius: 50%;
+    margin-top: 6px;
+  }
+  .live-card {
+    margin-top: 38px;
+    background: rgba(20,20,20,0.55);
+    backdrop-filter: blur(12px);
+    padding: 22px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .pill {
+    background: #ffeb00;
+    color:#000;
+    padding: 10px 18px;
+    border-radius: 40px;
+    font-weight: 800;
+    display: inline-block;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+  .hashtag {
+    margin-top: 12px;
+    font-weight: 700;
+    opacity: 0.9;
   }
 </style>
 </head>
 <body>
-  <div class="canvas" role="application" aria-label="Página de eventos proféticos vertical">
-    <!-- BACKDROP LAYERS -->
-    <div class="bg-layers">
-      <div class="rays"></div>
-      <div class="pulse-center"></div>
-      <!-- dynamic particles will be appended here -->
-    </div>
-
-    <!-- HEADER -->
-    <header>
-      <div class="brand">
-        <div class="title">Sinais & Acordos</div>
-        <div class="subtitle">Monitor profético • Contagem até 2030</div>
-      </div>
-
-      <div class="clocks" aria-hidden="false">
-        <div class="clock" id="clock-israel" aria-live="polite"><div class="city">Jerusalém</div><div class="time">--:--:--</div></div>
-        <div class="clock" id="clock-br" aria-live="polite"><div class="city">São Paulo</div><div class="time">--:--:--</div></div>
-      </div>
-    </header>
-
-    <!-- BREAKING STRIP -->
-    <div class="breaking" role="status" aria-live="polite">
-      <div class="tag">ÚLTIMA</div>
-      <div class="headline" id="breaking-headline">Atenção: acompanhe sinais, orações e ações de paz.</div>
-    </div>
-
-    <!-- MAIN -->
-    <main>
-      <div class="grid" role="region">
-        <!-- LEFT -->
-        <div class="panel features" aria-label="Características">
-          <h3>Quatro características observadas</h3>
-          <div class="feature"><div class="dot" aria-hidden="true"></div><p><strong>Acordos e negociações</strong> — aumentam iniciativas de estabilização regional e diplomacia.</p></div>
-          <div class="feature"><div class="dot" aria-hidden="true"></div><p><strong>Tensões sociais e religiosas</strong> — polarização pública e debates sobre identidade.</p></div>
-          <div class="feature"><div class="dot" aria-hidden="true"></div><p><strong>Reposicionamentos políticos</strong> — pactos e mudanças de alianças com impacto geopolítico.</p></div>
-          <div class="feature"><div class="dot" aria-hidden="true"></div><p><strong>Ressurgimento de esperança messiânica</strong> — discursos proféticos ganham centralidade em comunidades.</p></div>
-
-          <div class="muted-small">Observações de caráter interpretativo — conteúdo informativo e espiritual.</div>
-
-          <div class="ticker-wrap" aria-hidden="false" style="margin-top:18px">
-            <div class="ticker" id="ticker"></div>
-          </div>
-        </div>
-
-        <!-- RIGHT -->
-        <div class="panel countdown-card" aria-label="Contagem e verso">
-          <div id="count-target" style="font-size:13px;color:var(--muted);font-weight:800">Contagem até <strong>1 jan 2030 • 00:00 UTC</strong></div>
-          <div class="bigcount" id="big-count">--</div>
-
-          <div class="segrow" style="margin-top:6px">
-            <div class="seg"><div class="num" id="days">--</div><div class="lbl">DIAS</div></div>
-            <div class="seg"><div class="num" id="hours">--</div><div class="lbl">HORAS</div></div>
-            <div class="seg"><div class="num" id="minutes">--</div><div class="lbl">MIN</div></div>
-            <div class="seg"><div class="num" id="seconds">--</div><div class="lbl">SEG</div></div>
-          </div>
-
-          <div class="verse" id="verse">Mensagem de força aparecerá a cada minuto<br><small>Frases motivacionais / bíblicas (aleatórias)</small></div>
-
-          <div class="micrograph" aria-hidden="true" style="margin-top:12px"><div class="graph-line" id="graphline"></div></div>
-        </div>
-      </div>
-    </main>
-
-    <!-- LOWER THIRD -->
-    <div class="lower-third" role="note" aria-hidden="false">
-      <div class="lt-pill" id="live-pill">AO VIVO</div>
-      <div>
-        <div class="lt-text" id="lt-text">Monitor Profético — Observando sinais e esperança</div>
-        <div class="lt-sub" id="lt-sub">Transmissão contínua • Conteúdo espiritual e informativo</div>
-      </div>
-      <div style="margin-left:auto;color:var(--muted);font-weight:700">#Contagem2030</div>
-    </div>
-
-    <!-- FLARE for minute sync -->
-    <div class="flare" id="flare" aria-hidden="true"></div>
+<div class="container">  <header>
+    <h1>SINAIS & ACORDOS</h1>
+    <div class="sub">Monitor profético • Contagem até 2030</div><div class="clocks">
+  <div class="clock">
+    <div class="city">Jerusalém</div>
+    <div class="time" id="clock1">--:--:--</div>
   </div>
+  <div class="clock">
+    <div class="city">São Paulo</div>
+    <div class="time" id="clock2">--:--:--</div>
+  </div>
+</div>
 
-<script>
-/* ============================
-   UTILIDADES / CONFIGURAÇÕES
-   ============================ */
+  </header>  <div class="breaking">
+    <div class="tag">ÚLTIMA</div>
+    <div class="text">Acompanhe sinais, orações e ações de paz.</div>
+  </div>  <h2>Quatro características observadas</h2>  <div class="feature">
+    <div class="dot"></div>
+    <div><strong>Acordos e negociações</strong> — aumentam iniciativas de diplomacia.</div>
+  </div>  <div class="feature">
+    <div class="dot"></div>
+    <div><strong>Tensões sociais e religiosas</strong> — polarização e debates intensificados.</div>
+  </div>  <div class="feature">
+    <div class="dot"></div>
+    <div><strong>Reposicionamentos políticos</strong> — novas alianças e pactos.</div>
+  </div>  <div class="feature">
+    <div class="dot"></div>
+    <div><strong>Movimento messiânico</strong> — esperança profética crescente.</div>
+  </div>  <div class="live-card">
+    <div class="pill">AO VIVO</div>
+    <div style="font-size:22px;font-weight:800;line-height:26px;">
+      Monitor Profético — Observando sinais e esperança
+    </div>
+    <div style="margin-top:10px;opacity:0.8;">
+      Transmissão contínua • Conteúdo espiritual e informativo
+    </div><div class="hashtag">#Contagem2030</div>
 
-/* Target date (UTC) - exact moment 2030-01-01 00:00:00 UTC */
-const TARGET_UTC_MS = Date.parse('2030-01-01T00:00:00Z');
-
-/* Verses / motivational lines (kept short for display) */
-const VERSES = [
-  "Posso todas as coisas naquele que me fortalece. — Fl 4:13",
-  "O Senhor é minha luz; não temerei. — Sl 27:1",
-  "Deus é o nosso refúgio e fortaleza. — Sl 46:1",
-  "Sede fortes e corajosos; o Senhor está convosco. — Js 1:9",
-  "Entrega teu caminho ao Senhor; confia nele. — Sl 37:5",
-  "Não temas — eu sou contigo. — Is 41:10",
-  "Espera no Senhor e anima-te; ele fortalecerá teu coração. — Sl 27:14",
-  "Alegrai-vos na esperança; sede pacientes na tribulação. — Rm 12:12"
-];
-
-/* Ticker messages */
-const TICKETS = [
-  "Acordos multilaterais em destaque",
-  "Comunidades em oração e vigilância",
-  "Diálogos inter-religiosos acontecendo",
-  "Movimentações diplomáticas monitoradas",
-  "Iniciativas humanitárias em progresso",
-  "Sinais de esperança e mobilização"
-];
-
-/* Breaking headlines rotation (for the breaking strip) */
-const BREAKING = [
-  "Negociações diplomáticas em curso — acompanhe.",
-  "Comunidades ecoam pedidos de paz em todo o mundo.",
-  "Novas alianças geopolíticas ganham força.",
-  "Organizações humanitárias mobilizam recursos."
-];
-
-/* Accessibility: if prefers-reduced-motion, lower animations */
-const PREFERS_REDUCED = (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-
-/* ========== CLOCKS ========== */
-function updateClocks(){
-  try{
-    const now = new Date();
-    const israel = now.toLocaleTimeString('pt-BR',{timeZone:'Asia/Jerusalem',hour12:false});
-    const brasil = now.toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour12:false});
-    document.querySelector('#clock-israel .time').textContent = israel;
-    document.querySelector('#clock-br .time').textContent = brasil;
-  }catch(e){ /* ignore */ }
-}
-updateClocks();
-setInterval(updateClocks, 1000);
-
-/* ========== COUNTDOWN (preciso) ========== */
-function updateCountdown(){
-  const now = Date.now();
-  let diff = TARGET_UTC_MS - now;
-  if(diff <= 0){
-    // reached or passed
-    document.getElementById('big-count').textContent = '0 dias';
-    document.getElementById('days').textContent = '00';
-    document.getElementById('hours').textContent = '00';
-    document.getElementById('minutes').textContent = '00';
-    document.getElementById('seconds').textContent = '00';
-    document.getElementById('verse').textContent = 'Momento alcançado — mantenha esperança e ação.';
-    return;
-  }
-  // calculate digits precisely:
-  const secondsTotal = Math.floor(diff / 1000);
-  const days = Math.floor(secondsTotal / (24*3600));
-  const hours = Math.floor((secondsTotal % (24*3600)) / 3600);
-  const minutes = Math.floor((secondsTotal % 3600) / 60);
-  const seconds = secondsTotal % 60;
-
-  document.getElementById('days').textContent = String(days).padStart(2,'0');
-  document.getElementById('hours').textContent = String(hours).padStart(2,'0');
-  document.getElementById('minutes').textContent = String(minutes).padStart(2,'0');
-  document.getElementById('seconds').textContent = String(seconds).padStart(2,'0');
-  document.getElementById('big-count').textContent = days + (days===1 ? ' dia' : ' dias');
-}
-updateCountdown();
-setInterval(updateCountdown, 1000);
-
-/* ========== VERSE ROTATION a cada minuto (síncrono com relógio) ========== */
-function showVerseRandom(){
-  const v = VERSES[Math.floor(Math.random() * VERSES.length)];
-  const el = document.getElementById('verse');
-  el.style.opacity = 0;
-  setTimeout(()=>{ el.textContent = v; el.style.opacity = 1 }, 240);
-}
-/* start immediately and then align to minute */
-showVerseRandom();
-(function alignVerseToMinute(){
-  const now = new Date();
-  const msToNextMinute = (60 - now.getUTCSeconds())*1000 - now.getUTCMilliseconds();
-  setTimeout(()=>{
-    showVerseRandom();
-    setInterval(showVerseRandom, 60*1000);
-  }, msToNextMinute);
-})();
-
-/* ========== TICKER SETUP (duplicated content for seamless scroll) ========== */
-(function setupTicker(){
-  const wrap = document.getElementById('ticker');
-  if(!wrap) return;
-  // create doubled list for smooth looping
-  const items = [];
-  for(let i=0;i<3;i++){
-    TICKETS.forEach(t=>{
-      const s = document.createElement('span');
-      s.className = 'ticket';
-      s.textContent = t;
-      items.push(s);
-      wrap.appendChild(s);
-    });
-  }
-  // compute animation duration proportional to width
-  // fallback: fixed 28s if cannot compute now
-  function setTickerDuration(){
-    try{
-      const totalWidth = wrap.scrollWidth;
-      const base = Math.max(20000, totalWidth * 12); // ms, scale
-      wrap.style.animationDuration = (PREFERS_REDUCED ? 0 : base) + 'ms';
-    }catch(e){
-      wrap.style.animationDuration = '28000ms';
-    }
-  }
-  setTickerDuration();
-  window.addEventListener('resize', () => { setTimeout(setTickerDuration, 300); });
-})();
-
-/* ========== BREAKING HEADLINE ROTATION ========== */
-(function rotateBreaking(){
-  const el = document.getElementById('breaking-headline');
-  if(!el) return;
-  let idx = 0;
-  function tick(){
-    el.style.opacity = 0;
-    setTimeout(()=>{ el.textContent = BREAKING[idx]; el.style.opacity = 1; idx = (idx+1) % BREAKING.length; }, 480);
-  }
-  tick();
-  setInterval(tick, 15000);
-})();
-
-/* ========== FLARE: small visual flash synced to start of each minute ========= */
-(function minuteFlare(){
-  const flare = document.getElementById('flare');
-  if(!flare) return;
-  function flash(){
-    flare.style.transition = 'none';
-    flare.style.opacity = '1';
-    flare.style.transform = 'scaleX(1)';
-    setTimeout(()=>{ flare.style.transition = 'opacity 900ms ease, transform 900ms ease'; flare.style.opacity = '0'; flare.style.transform = 'scaleX(0)'; }, 120);
-  }
-  // align to top of minute UTC
-  const now = new Date();
-  const msToNextMinute = (60 - now.getUTCSeconds())*1000 - now.getUTCMilliseconds();
-  setTimeout(()=>{
-    flash();
-    setInterval(flash, 60*1000);
-  }, msToNextMinute);
-})();
-
-/* ========== MICRO GRAPH: subtle movement - randomized for organic feel ========== */
-(function microGraph(){
-  const g = document.getElementById('graphline');
-  if(!g) return;
-  // animate by translating background repetitively (CSS already animates)
-  // add tiny periodic amplitude wiggle for life
-  let t = 0;
+  </div></div><script>
+function clock(id, offset){
   setInterval(()=>{
-    t++;
-    const amp = 6 + Math.sin(t/7)*6;
-    g.style.height = amp + 'px';
-  }, 900);
-})();
-
-/* ========== DYNAMIC PARTICLES - lightweight ========== */
-(function spawnParticles(){
-  const container = document.querySelector('.bg-layers');
-  if(!container) return;
-  const w = 40; // count baseline
-  for(let i=0;i<w;i++){
-    const p = document.createElement('div');
-    p.className = 'particle';
-    p.style.left = (5 + Math.random()*90) + '%';
-    p.style.top = (-10 - Math.random()*20) + '%';
-    p.style.opacity = (0.08 + Math.random()*0.12).toFixed(2);
-    p.style.transform = `translateY(${Math.random()*10}px)`;
-    p.style.animationDuration = (8 + Math.random()*18) + 's';
-    p.style.width = (2 + Math.random()*5) + 'px';
-    p.style.height = p.style.width;
-    container.appendChild(p);
-  }
-})();
-
-/* ========== INITIAL LIVE LABEL PULSE ========== */
-(function livePill(){
-  const pill = document.getElementById('live-pill');
-  if(!pill) return;
-  let grow = true;
-  setInterval(()=>{
-    pill.style.transform = grow ? 'scale(1.06)' : 'scale(1)';
-    pill.style.boxShadow = grow ? '0 8px 24px rgba(215,38,49,0.18)' : 'none';
-    grow = !grow;
-  }, 1200);
-})();
-
-/* ========== OPTIONAL: quick instructions OUTPUT for operator (console) ========== */
-console.info("Página carregada — contagem até 2030 ativa. Personalize frases em VERSES, tickets em TICKETS.");
-
-/* Accessibility note: script avoids sudden motion, respects prefers-reduced-motion. */
-</script>
-</body>
-        </html>
+    let d = new Date();
+    let utc = d.getTime() + (d.getTimezoneOffset()*60000);
+    let local = new Date(utc + 3600000*offset);
+    document.getElementById(id).innerText = local.toLocaleTimeString();
+  },1000);
+}
+clock("clock1", 2); // Jerusalém
+clock("clock2", -3); // São Paulo
+</script></body>
+</html>
