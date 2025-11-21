@@ -79,6 +79,7 @@
 </div>
 
   </div>  <script>
+    // --- CLOCKS (Jerusalém & São Paulo)
     function updateClocks(){
       const now=new Date();
       const fmtJ=new Intl.DateTimeFormat('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false,timeZone:'Asia/Jerusalem'});
@@ -88,6 +89,7 @@
     }
     setInterval(updateClocks,250);updateClocks();
 
+    // --- SCENE SEQUENCER ---
     const scenes=[
       {line:'Em um mundo que corre contra o tempo...',sub:'A profecia encontra o agora.'},
       {line:'Sinais se alinham sobre as nações.',sub:'Jerusalém • São Paulo'},
@@ -115,6 +117,71 @@
 
     setInterval(nextScene,3800);
     nextScene();
+
+    // --- COUNTDOWN TO 2030 (ZERA em 01/01/2030 00:00 — America/Sao_Paulo) ---
+    // Target: midnight Jan 1, 2030 in São Paulo timezone (UTC-03:00)
+    const target = new Date('2030-01-01T00:00:00-03:00');
+
+    // Create visual countdown UI
+    (function createCountdown(){
+      const stage = document.getElementById('stage');
+      const cd = document.createElement('div');
+      cd.className = 'countdown';
+      cd.innerHTML = `
+        <div class="cd-inner">
+          <div class="cd-item"><div class="num" id="cd-days">0</div><div class="label">dias</div></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-item"><div class="num" id="cd-hours">00</div><div class="label">horas</div></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-item"><div class="num" id="cd-min">00</div><div class="label">min</div></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-item"><div class="num" id="cd-sec">00</div><div class="label">seg</div></div>
+        </div>
+      `;
+      stage.appendChild(cd);
+
+      // Styles for countdown (injected for clarity)
+      const style = document.createElement('style');
+      style.textContent = `
+        .countdown{position:absolute;top:34%;left:50%;transform:translateX(-50%);z-index:60;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.2));padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);backdrop-filter:blur(6px);}
+        .countdown .cd-inner{display:flex;align-items:center;gap:10px}
+        .cd-item{text-align:center;min-width:64px}
+        .cd-item .num{font-family:'Playfair Display',serif;font-size:34px;font-weight:700;letter-spacing:1px;color:var(--accent);text-shadow:0 10px 30px rgba(0,0,0,0.7)}
+        .cd-item .label{font-size:10px;color:var(--muted);margin-top:4px;text-transform:uppercase}
+        .cd-sep{font-size:30px;color:rgba(255,255,255,0.9);padding:0 4px}
+        /* highlight pulse when near zero */
+        .countdown.pulse .num{animation:countPulse 1s infinite}
+        @keyframes countPulse{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+      `;
+      document.head.appendChild(style);
+
+      // Update loop
+      function updateCountdown(){
+        const now = new Date();
+        let diff = target.getTime() - now.getTime();
+        if(diff < 0) diff = 0;
+        const sec = Math.floor(diff/1000) % 60;
+        const min = Math.floor(diff/1000/60) % 60;
+        const hrs = Math.floor(diff/1000/60/60) % 24;
+        const days = Math.floor(diff/1000/60/60/24);
+
+        document.getElementById('cd-days').textContent = days.toString();
+        document.getElementById('cd-hours').textContent = String(hrs).padStart(2,'0');
+        document.getElementById('cd-min').textContent = String(min).padStart(2,'0');
+        document.getElementById('cd-sec').textContent = String(sec).padStart(2,'0');
+
+        // highlight pulse in final 30 days
+        const countdownEl = document.querySelector('.countdown');
+        if(days <= 30) countdownEl.classList.add('pulse'); else countdownEl.classList.remove('pulse');
+
+        // when reaches zero, show final message
+        if(diff === 0){
+          countdownEl.innerHTML = '<div style="padding:10px 18px;text-align:center;font-weight:700;font-size:18px;color:var(--accent)">CONTAGEM ZERADA — 2030</div>';
+        }
+      }
+      updateCountdown();
+      setInterval(updateCountdown, 250);
+    })();
 
   </script></body>
 </html>
